@@ -1,21 +1,16 @@
-# Project Name
+# city-explorer
 
-**Author**: Your Name Goes Here
+**Author**: Ahmad Shalein
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+A web application, made using React library, that uses the API from locationIQ, to get the name, longitude and latitude of the given city name, and display this info with an image of the map of that city.
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+The user should enter the city name to see the longitude and latitude of this city, and an image of it's map.
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+I used React library, and through npm, I was able to use Axios and React Bootstrap. The structure of components was as follows: App -> Main
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
-
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
-
-## Credit and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+13-6-2001 5:00pm - Application now has a fully-functional search city input, to then show results about the city.
