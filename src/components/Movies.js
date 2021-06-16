@@ -1,62 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import CardDeck from 'react-bootstrap/CardDeck'
-import { Container, Row, Col } from 'react-bootstrap'
+import ListGroupItem from 'react-bootstrap/ListGroupItem';
+import Container from 'react-bootstrap/Container';
 
-class Movies extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movies: this.props.weather
-    }
-  }
-  
-  render() {
-    return (
-      <>
-        {this.props.movies.length !== 0 && this.props.showMovies &&
-          <div className='gird'>
-            <h1>Movies List</h1>
-             <Container>
-                  <Row md={ "auto"}>
-                {this.props.movies.map((day, i) => (
-                
-                    <CardDeck style={{ width: "50%"}}>
-                      <Card >
-                        <Card.Img style={{ width: "100%", height: "40%" }}variant="top" alt={"Movie Img"}src={this.props.movies[i].image_url} />
+export class Movies extends Component {
+    render() {
+        return (
+            <div style={{ width: '18rem', margin: '10px', display: "inline-block"}}>
+                <Container style={{ display: "flex", justifyContent: "center", marginTop: "20px", }}>
+                    <Card style={{ width: '100%', border: 'solid 1px black' }}>
+                        <Card.Img variant="top" src={this.props.movies.image_url} />
                         <Card.Body>
-                          <Card.Title style={{ margin: "25%" }}>{this.props.movies[i].title}</Card.Title>
-                          <ListGroup variant="Secondary">
-                            <ListGroup.Item>Title: {this.props.movies[i].title}</ListGroup.Item>
-                            <ListGroup.Item>Overview: {this.props.movies[i].overview}</ListGroup.Item>
-                            <ListGroup.Item>Popularity: {this.props.movies[i].popularity}</ListGroup.Item>
-                          </ListGroup>
-
-
-                          <Card.Footer>
-                            <small className="text-muted" Item>Release Date: {this.props.movies[i].released_on} , {<br></br>}</small>
-                            <small className="text-muted" Item>Average Votes: {this.props.movies[i].average_votes}, {<br></br>}</small>
-                            <small className="text-muted" Item>Total Votes: {this.props.movies[i].total_votes}</small>
-
-                          </Card.Footer>
+                            <Card.Title>{this.props.title}</Card.Title>
+                            <Card.Text>
+                                {this.props.movies.overview}
+                            </Card.Text>
                         </Card.Body>
-                      </Card>
-                    </CardDeck>
-                ))
-                } </Row>
-                   </Container>
-                
-          </div>
-        }
-        {this.props.showMovies === false &&
-          <ListGroup variant="danger">
-            <ListGroup.Item>Title:  {this.props.movies}</ListGroup.Item>
-          </ListGroup>
-        }
-      </>
-    )
-  }
+                        <ListGroup className="list-group-flush">
+                            <ListGroupItem>Released on: <span style={{ fontWeight: 'bold'}}>{this.props.movies.released_on}</span></ListGroupItem>
+                            <ListGroupItem>Popularity: <span style={{ fontWeight: 'bold'}}>{this.props.movies.popularity}</span></ListGroupItem>
+                            <ListGroupItem>Average Votes: <span style={{ fontWeight: 'bold'}}>{this.props.movies.average_votes}</span></ListGroupItem>
+                            <ListGroupItem>Total Votes: <span style={{ fontWeight: 'bold'}}>{this.props.movies.total_votes}</span></ListGroupItem>
+                        </ListGroup>
+                    </Card>
+                </Container>
+                <br />
+            </div>
+        )
+    }
 }
+
 export default Movies;

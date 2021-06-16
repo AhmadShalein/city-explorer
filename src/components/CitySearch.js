@@ -7,14 +7,14 @@ import {
  } from 'react-bootstrap';
 
 class CitySearch extends React.Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault();
     this.props.displayLatLon();
   }
 
   render() {
     return(
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.props.displayLatLon}>
         <Form.Group controlId="cityName">
           <Form.Label>Where would you like to explore?</Form.Label>
           <Form.Control onChange={this.props.updateCity} type="text" placeholder="Enter a City" />
@@ -27,9 +27,7 @@ class CitySearch extends React.Component {
             </Alert>
           </>
         }
-        <Button variant="primary" type="submit">
-          Explore!
-        </Button>
+        <Button variant="primary" type="submit">Explore!</Button>
       </Form>
     )
   }

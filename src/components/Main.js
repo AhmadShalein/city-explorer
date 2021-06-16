@@ -1,5 +1,7 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import axios from 'axios';
 import CitySearch from './CitySearch';
 import LatLon from './LatLon';
@@ -30,60 +32,51 @@ class Main extends React.Component{
         this.setState({searchQuery: event.target.value});
     }
 
-    displayLatLon = async(event) => {
+    displayLatLon = async (event) => {
         event.preventDefault();
-        let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_MAP_KEY}&q=${this.state.searchQuery}&format=json`;
-        try {
-        let location = await axios.get(url);
-        this.setState({
-            location: location.data[0].display_name,
-            latitude: location.data[0].lat, 
-            longitude: location.data[0].lon, 
-            displayMap: true,
-            displayError: false 
-        });
-        this.displayWeather(location.data[0].lat, location.data[0].lon)
-        }
-        catch(error){
+        await axios.get(`https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_MAP_KEY}&q=${this.state.searchQuery}&format=json`).then(response => {
+            this.setState({
+                location: response.data[0].display_name,
+                latitude: response.data[0].lat, 
+                longitude: response.data[0].lon, 
+                displayMap: true,
+                displayError: false 
+            });
+        })
+        .catch(error => {
             this.setState({
             displayMap: false,
             displayError: true,
             errorMessage: `error is ${error}`,
         });
-        }
-    }
-
-    displayWeather = async (lat, lon) => {
-        try{
-          let weather = await axios.get(`${process.env.REACT_APP_URL}/weather?city=${this.state.searchQuery}`, { params: {latitude: lat, longitude: lon, searchQuery: this.state.searchQuery}});
-          this.setState({
-            weather: weather.data,
-            showWeather: true
+        })
+        await axios.get(`${process.env.REACT_APP_URL}/weather?lon=${this.state.longitude}&lat=${this.state.latitude}`).then(response => {
+            this.setState({
+                weather: response.data,
+                showWeather: true
+              })
           })
-        } catch(error){
+        .catch(error => {
           this.setState({
             displayMap: false,
             displayError: true,
             showWeather: false,
             errorMessage: `error is ${error}`, 
           })
-        }
-      }
-
-      displayMovies = async () => {
-        try{
-          let movies = await axios.get(`${process.env.REACT_APP_URL}/movie`, { params: {city: this.state.searchQuery}});
-          this.setState({
-            movies: movies.data,
-            showMovies: true,
+        });
+        await axios.get(`${process.env.REACT_APP_URL}/movies?city=${this.state.searchQuery}`).then(response => {
+            this.setState({
+                movies: response.data,
+                showMovies: true,
+              })
           })
-        } catch(error){
+        .catch(error => {
           this.setState({
             errorMessage: `error is ${error}`,
             showMovies: false
           });
-        }
-      } 
+        })
+    }
 
     render() {
         return (
@@ -107,13 +100,17 @@ class Main extends React.Component{
                 </Row>
                 <Row>
                     <Col>
-                        <Weather weather={this.state.weather} />
+                    {
+                        this.state.weather.map(item => <Weather weather={item} />)
+                    }
                     </Col>
                 </Row>
                 <Row>
-                    <COl>
-                        <Movies movies={this.state.movies} />
-                    </COl>
+                    <Col>
+                    {
+                        this.state.movies.map(item => <Movies movies={item} />)
+                    }
+                    </Col>
                 </Row>
                 </>
             }
