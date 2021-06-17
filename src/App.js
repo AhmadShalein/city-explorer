@@ -11,7 +11,7 @@ class App extends React.Component {
         <header>
           <Navbar bg='dark' expand="lg">  
               <h1>City Explorer</h1>
-              <p>Enter a location below to learn about the weather, restaurants, movies, and more!</p>
+              <p>Enter a location below to learn about the weather, restaurants, movies, and more! </p>
           </Navbar>
         </header>
         <Main />
